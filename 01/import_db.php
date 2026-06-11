@@ -12,6 +12,7 @@ $queries[] = "CREATE TABLE IF NOT EXISTS jalan (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     nama_jalan VARCHAR(100) NOT NULL,
     status_jalan VARCHAR(50) NOT NULL,
+    panjang_jalan DOUBLE DEFAULT NULL,
     geojson TEXT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
@@ -30,11 +31,26 @@ $queries[] = "CREATE TABLE IF NOT EXISTS parsil (
 $queries[] = "CREATE TABLE IF NOT EXISTS spbu (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     nama_spbu VARCHAR(100) NOT NULL,
-    alamat TEXT NOT NULL,
+    no_whatsapp VARCHAR(50) DEFAULT NULL,
+    status_24jam VARCHAR(10) DEFAULT 'Tidak',
     latitude VARCHAR(50) NOT NULL,
     longitude VARCHAR(50) NOT NULL,
     geojson TEXT DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+// 4. Buat tabel users (untuk login)
+$queries[] = "CREATE TABLE IF NOT EXISTS users (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    nama_lengkap VARCHAR(100) NOT NULL,
+    role VARCHAR(30) NOT NULL DEFAULT 'admin'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+// 5. Masukkan akun default jika belum ada
+$queries[] = "INSERT IGNORE INTO users (id, username, password, nama_lengkap, role) VALUES
+(1, 'admin', 'admin123', 'Diva Schenka (Admin)', 'admin'),
+(2, 'walikota', 'walikota123', 'Bapak Walikota', 'walikota');";
 
 // Eksekusi pembaruan
 $success = 0;

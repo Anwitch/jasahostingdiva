@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WebGIS Pontianak — Portal Sistem Informasi Geografis</title>
+<title>WebGIS Pontianak â€” Portal Sistem Informasi Geografis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -47,7 +47,7 @@
     line-height: 1.6;
   }
 
-  /* ── NAVBAR ── */
+  /* â”€â”€ NAVBAR â”€â”€ */
   .navbar {
     background: var(--navy);
     padding: 0 2rem;
@@ -82,7 +82,7 @@
   }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  /* ── HERO ── */
+  /* â”€â”€ HERO â”€â”€ */
   .hero {
     background: var(--navy2);
     position: relative; overflow: hidden;
@@ -124,10 +124,10 @@
   }
   .hero-chip svg { width: 12px; height: 12px; }
 
-  /* ── MAIN ── */
+  /* â”€â”€ MAIN â”€â”€ */
   .main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; }
 
-  /* ── PORTAL LABEL ── */
+  /* â”€â”€ PORTAL LABEL â”€â”€ */
   .section-label {
     font-size: 11px; font-weight: 600; letter-spacing: .1em;
     text-transform: uppercase; color: var(--text3);
@@ -136,7 +136,7 @@
   }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* ── PORTAL CARDS ── */
+  /* â”€â”€ PORTAL CARDS â”€â”€ */
   .portal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -215,7 +215,7 @@
   .portal-enter:hover { opacity: .9; transform: translateX(2px); }
   .portal-enter svg { width: 15px; height: 15px; }
 
-  /* ── STAT BAR ── */
+  /* â”€â”€ STAT BAR â”€â”€ */
   .stat-bar {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -234,7 +234,7 @@
   .sb-label { font-size: 11px; color: var(--text3); margin-bottom: 1px; }
   .sb-val { font-size: 19px; font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
 
-  /* ── BOTTOM GRID ── */
+  /* â”€â”€ BOTTOM GRID â”€â”€ */
   .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 1.5rem; }
   @media(max-width:600px){ .bottom-grid { grid-template-columns: 1fr; } }
 
@@ -398,7 +398,7 @@
   <div class="portal-grid">
 
     <!-- FOLDER 01: Infrastruktur -->
-    <a href="http://localhost/wib_gis/01/login.php" class="portal-card">
+    <a href="01/login.php" class="portal-card">
       <!-- MAP PREVIEW -->
       <div class="portal-map" style="background:#1C3A5E;">
         <svg viewBox="0 0 480 210" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -451,7 +451,7 @@
 
           <!-- Folder label pill -->
           <rect x="350" y="8" width="118" height="22" rx="11" fill="rgba(59,130,246,0.25)" stroke="rgba(99,163,245,0.4)" stroke-width="0.8"/>
-          <text x="409" y="22" font-size="10" fill="#93c5fd" font-family="Inter,sans-serif" font-weight="600" text-anchor="middle">Folder 01 — Infrastruktur</text>
+          <text x="409" y="22" font-size="10" fill="#93c5fd" font-family="Inter,sans-serif" font-weight="600" text-anchor="middle">Folder 01 â€” Infrastruktur</text>
         </svg>
       </div>
 
@@ -477,7 +477,7 @@
     </a>
 
     <!-- FOLDER 02: Sosial & Warga -->
-    <a href="http://localhost/wib_gis/02/login.php" class="portal-card">
+    <a href="02/login.php" class="portal-card">
       <!-- MAP PREVIEW -->
       <div class="portal-map" style="background:#1A3A2A;">
         <svg viewBox="0 0 480 210" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -522,7 +522,7 @@
 
           <!-- Folder label pill -->
           <rect x="340" y="8" width="130" height="22" rx="11" fill="rgba(16,185,129,0.2)" stroke="rgba(52,211,153,0.35)" stroke-width="0.8"/>
-          <text x="405" y="22" font-size="10" fill="#6ee7b7" font-family="Inter,sans-serif" font-weight="600" text-anchor="middle">Folder 02 — Sosial &amp; Warga</text>
+          <text x="405" y="22" font-size="10" fill="#6ee7b7" font-family="Inter,sans-serif" font-weight="600" text-anchor="middle">Folder 02 â€” Sosial &amp; Warga</text>
         </svg>
       </div>
 
@@ -557,7 +557,7 @@
       </div>
       <div>
         <div class="sb-label">Ruas Jalan</div>
-        <div class="sb-val c-blue-text">—</div>
+        <div class="sb-val c-blue-text">â€”</div>
       </div>
     </div>
     <div class="sb-card">
@@ -566,7 +566,7 @@
       </div>
       <div>
         <div class="sb-label">Bidang Parsil</div>
-        <div class="sb-val" style="color:var(--purple);">—</div>
+        <div class="sb-val" style="color:var(--purple);">â€”</div>
       </div>
     </div>
     <div class="sb-card">
@@ -575,7 +575,7 @@
       </div>
       <div>
         <div class="sb-label">Titik SPBU</div>
-        <div class="sb-val c-amber-text">—</div>
+        <div class="sb-val c-amber-text">â€”</div>
       </div>
     </div>
     <div class="sb-card">
@@ -584,7 +584,7 @@
       </div>
       <div>
         <div class="sb-label">Rumah Ibadah</div>
-        <div class="sb-val c-green-text">—</div>
+        <div class="sb-val c-green-text">â€”</div>
       </div>
     </div>
     <div class="sb-card">
@@ -593,7 +593,7 @@
       </div>
       <div>
         <div class="sb-label">Data Warga</div>
-        <div class="sb-val" style="color:#5B5BD6;">—</div>
+        <div class="sb-val" style="color:#5B5BD6;">â€”</div>
       </div>
     </div>
     <div class="sb-card">
@@ -602,7 +602,7 @@
       </div>
       <div>
         <div class="sb-label">Pengaduan</div>
-        <div class="sb-val c-red-text">—</div>
+        <div class="sb-val c-red-text">â€”</div>
       </div>
     </div>
   </div>
@@ -665,7 +665,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="#1D7A5F"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           Aktivitas Sistem
         </div>
-        <span class="badge badge-green" id="waktu-update">—</span>
+        <span class="badge badge-green" id="waktu-update">â€”</span>
       </div>
       <div class="card-body" style="padding:8px 16px">
         <div class="act-list">
@@ -675,7 +675,7 @@
             </div>
             <div>
               <div class="act-title">Data jalan diperbarui</div>
-              <div class="act-meta">Folder 01 · edit_jalan.php</div>
+              <div class="act-meta">Folder 01 Â· edit_jalan.php</div>
             </div>
           </div>
           <div class="act-item">
@@ -684,7 +684,7 @@
             </div>
             <div>
               <div class="act-title">Parsil baru disimpan</div>
-              <div class="act-meta">Folder 01 · simpan_parsil.php</div>
+              <div class="act-meta">Folder 01 Â· simpan_parsil.php</div>
             </div>
           </div>
           <div class="act-item">
@@ -693,7 +693,7 @@
             </div>
             <div>
               <div class="act-title">Radius ibadah diperbarui</div>
-              <div class="act-meta">Folder 02 · update_radius.php</div>
+              <div class="act-meta">Folder 02 Â· update_radius.php</div>
             </div>
           </div>
           <div class="act-item">
@@ -702,7 +702,7 @@
             </div>
             <div>
               <div class="act-title">Laporan pengaduan masuk</div>
-              <div class="act-meta">Folder 02 · simpan_laporan_cepat.php</div>
+              <div class="act-meta">Folder 02 Â· simpan_laporan_cepat.php</div>
             </div>
           </div>
         </div>
@@ -740,11 +740,11 @@
       </div>
     </div>
     <div class="ac-foot" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <a href="http://localhost/wib_gis/01/login.php" class="btn-login-full" style="background:#1A6FA8;">
+      <a href="01/login.php" class="btn-login-full" style="background:#1A6FA8;">
         <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
         Login Peta Infrastruktur
       </a>
-      <a href="http://localhost/wib_gis/02/login.php" class="btn-login-full" style="background:#1D7A5F;">
+      <a href="02/login.php" class="btn-login-full" style="background:#1D7A5F;">
         <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
         Login Peta Sosial
       </a>
@@ -755,13 +755,13 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <p>© 2026 WebGIS Pontianak · Pemerintah Kota Pontianak</p>
+  <p>Â© 2026 WebGIS Pontianak Â· Pemerintah Kota Pontianak</p>
   <div class="footer-links">
-    <a href="http://localhost/wib_gis/01/login.php">
+    <a href="01/login.php">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       Peta Infrastruktur
     </a>
-    <a href="http://localhost/wib_gis/02/login.php">
+    <a href="02/login.php">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
       Peta Sosial
     </a>

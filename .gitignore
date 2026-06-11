@@ -1,0 +1,5 @@
+
+# Coolify Local Debugger config
+.env
+.coolify-local.json
+Dockerfile.coolify

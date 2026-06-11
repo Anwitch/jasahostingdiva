@@ -1,0 +1,7 @@
+.git
+.gitignore
+.env
+.coolify-local.json
+Dockerfile.coolify
+db/
+*.md
