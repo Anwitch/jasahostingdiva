@@ -1,15 +1,17 @@
-# 1. Menggunakan base image PHP resmi yang sudah dilengkapi server web Apache
+# Menggunakan image base resmi dari mlocati yang sudah menyertakan installer extension otomatis
 FROM php:8.1-apache
 
-# 2. Menginstall dan mengaktifkan ekstensi mysqli untuk koneksi database MySQL/MariaDB
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+# Instalasi mysqli secara instan tanpa proses compile manual yang berat
+RUN curl -sSL https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions -o /usr/local/bin/install-php-extensions && \
+    chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions mysqli
 
-# 3. Menyalin seluruh source code aplikasi dari lokal ke direktori dokumen web Apache di dalam container
+# Menyalin seluruh kode WebGIS ke dalam folder server Apache
 COPY . /var/www/html/
 
-# 4. Mengatur hak akses (permissions) folder web agar server Apache dapat membaca file dengan lancar
+# Memberikan hak akses penuh kepada Apache untuk membaca script PHP
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# 5. Membuka port 80 untuk akses browser ke WebGIS
+# Membuka jalur port 80
 EXPOSE 80
