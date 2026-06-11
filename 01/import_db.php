@@ -15,7 +15,7 @@ $queries[] = "CREATE TABLE IF NOT EXISTS jalan (
     geojson TEXT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
-// 2. Buat/Perbaiki tabel parsil (Ditambahkan kolom luas_tanah)
+// 2. Buat/Perbaiki tabel parsil (Kolom luas_tanah sudah aman di sini)
 $queries[] = "CREATE TABLE IF NOT EXISTS parsil (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     nama_pemilik VARCHAR(100) DEFAULT NULL,
@@ -26,7 +26,7 @@ $queries[] = "CREATE TABLE IF NOT EXISTS parsil (
     geojson TEXT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
-// 3. Buat tabel SPBU yang hilang (Solusi Error simpan_spbu.php)
+// 3. Buat tabel SPBU
 $queries[] = "CREATE TABLE IF NOT EXISTS spbu (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     nama_spbu VARCHAR(100) NOT NULL,
@@ -45,9 +45,6 @@ foreach ($queries as $index => $sql) {
         echo "<p style='color:red;'>❌ Gagal pada query ke-" . ($index + 1) . ": " . mysqli_error($conn) . "</p>";
     }
 }
-
-// Fitur Tambahan: Suntik paksa kolom luas_tanah jika tabel parsil lama sudah terlanjur ada
-mysqli_query($conn, "ALTER TABLE parsil ADD COLUMN IF NOT EXISTS luas_tanah VARCHAR(50) DEFAULT NULL;");
 
 echo "<br><b style='color:green;'>✔ Selesai! Folder 01 siap digunakan kembali.</b>";
 echo "<br><br><a href='index.php'>← Kembali ke Peta</a>";

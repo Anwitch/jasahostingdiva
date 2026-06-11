@@ -19,7 +19,7 @@ $queries[] = "CREATE TABLE IF NOT EXISTS users (
 $queries[] = "INSERT IGNORE INTO users (id, username, password, nama_lengkap, role) 
               VALUES (1, 'admin', 'admin', 'Diva Schenka (Admin)', 'admin');";
 
-// 2. Tabel Penduduk Miskin (Ditambahkan kolom 'umur' sesuai error simpan_miskin.php)
+// 2. Tabel Penduduk Miskin (Kolom umur sudah aman di sini)
 $queries[] = "CREATE TABLE IF NOT EXISTS penduduk_miskin (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     nama_kk VARCHAR(100) NOT NULL,
@@ -34,7 +34,7 @@ $queries[] = "CREATE TABLE IF NOT EXISTS penduduk_miskin (
     status_verifikasi VARCHAR(30) DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
-// 3. Tabel Histori Bantuan (Kolom relasi disesuaikan menjadi id_warga agar JOIN h.id_warga sukses)
+// 3. Tabel Histori Bantuan
 $queries[] = "CREATE TABLE IF NOT EXISTS histori_bantuan (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     id_warga INT(11) NOT NULL,
@@ -44,7 +44,7 @@ $queries[] = "CREATE TABLE IF NOT EXISTS histori_bantuan (
     keterangan TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
-// 4. Tabel laporan_cepat yang dilaporkan hilang (Solusi Error kelola_laporan.php)
+// 4. Tabel laporan_cepat
 $queries[] = "CREATE TABLE IF NOT EXISTS laporan_cepat (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     nama_pelapor VARCHAR(100) NOT NULL,
@@ -62,10 +62,6 @@ foreach ($queries as $index => $sql) {
         echo "<p style='color:red;'>❌ Gagal pada query ke-" . ($index + 1) . ": " . mysqli_error($conn) . "</p>";
     }
 }
-
-// Trik Aman: Tambah kolom mendadak jika tabel lama masih mengunci di server
-mysqli_query($conn, "ALTER TABLE penduduk_miskin ADD COLUMN IF NOT EXISTS umur INT(11) DEFAULT NULL;");
-mysqli_query($conn, "ALTER TABLE histori_bantuan ADD COLUMN IF NOT EXISTS id_warga INT(11) NOT NULL;");
 
 echo "<br><b style='color:teal;'>✔ Selesai! Seluruh struktur tabel UAS telah diselaraskan.</b>";
 echo "<br><br><a href='index.php'>← Kembali ke Peta Utama</a>";
