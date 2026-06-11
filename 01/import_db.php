@@ -1,14 +1,14 @@
 <?php
-// Menyertakan file koneksi yang sudah kamu perbaiki sebelumnya
+// Menyertakan file koneksi
 include 'koneksi.php';
 
 echo "<div style='font-family:sans-serif; padding:20px; background:#f8fafc; border-radius:8px;'>";
 echo "<h2 style='color:#1e3a8a;'>🚀 Database Auto-Importer & Repair — Folder 01</h2>";
-echo "<p>Sedang mengeksekusi migrasi tabel dan perbaikan kolom...</p><hr>";
+echo "<p>Sedang mengeksekusi migrasi tabel secara aman...</p><hr>";
 
-// Kumpulan query SQL untuk menyusun tabel dan memperbaiki error 'radius_warga' kemarin
 $queries = [];
 
+// 1. Buat tabel jalan jika belum ada
 $queries[] = "CREATE TABLE IF NOT EXISTS jalan (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     nama_jalan VARCHAR(100) NOT NULL,
@@ -16,6 +16,7 @@ $queries[] = "CREATE TABLE IF NOT EXISTS jalan (
     geojson TEXT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
+// 2. Buat tabel parsil jika belum ada
 $queries[] = "CREATE TABLE IF NOT EXISTS parsil (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     nama_pemilik VARCHAR(100) DEFAULT NULL,
@@ -25,11 +26,20 @@ $queries[] = "CREATE TABLE IF NOT EXISTS parsil (
     geojson TEXT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
-// Trik Aman: Cek dan tambah kolom radius_warga jika belum ada di tabel penduduk/titik krisis kamu
-// Ganti 'penduduk_miskin' dengan nama tabel titik utama kamu di folder 01 jika berbeda
-$queries[] = "ALTER TABLE parsil ADD COLUMN IF NOT EXISTS radius_warga INT(11) DEFAULT 0;"; 
+// 3. Buat tabel penduduk / titik warga miskin LANGSUNG dengan kolom radius_warga di dalamnya
+// (Ini menggantikan perintah ALTER TABLE yang error kemarin agar 100% aman)
+$queries[] = "CREATE TABLE IF NOT EXISTS penduduk_miskin (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    nama_kk VARCHAR(100) NOT NULL,
+    alamat TEXT NOT NULL,
+    anggota_keluarga INT(11) NOT NULL,
+    pendidikan_terakhir VARCHAR(50) NOT NULL,
+    latitude VARCHAR(50) NOT NULL,
+    longitude VARCHAR(50) NOT NULL,
+    radius_warga INT(11) NOT NULL DEFAULT 300
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
-// Eksekusi satu per satu agar jika ada yang salah, query lain tetap jalan
+// Eksekusi semua query satu per satu
 $success = 0;
 foreach ($queries as $index => $sql) {
     if (mysqli_query($conn, $sql)) {
@@ -39,7 +49,7 @@ foreach ($queries as $index => $sql) {
     }
 }
 
-echo "<br><b style='color:green;'>✔ Selesai! Berhasil mengeksekusi $success perintah SQL di database target.</b>";
+echo "<br><b style='color:green;'>✔ Selesai! Berhasil mengeksekusi $success perintah SQL dengan sukses tanpa error syntax.</b>";
 echo "<br><br><a href='index.php'>← Kembali ke Peta Utama</a>";
 echo "</div>";
 ?>
