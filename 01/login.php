@@ -4,15 +4,28 @@ include 'koneksi.php';
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
-    $password = md5(trim($_POST['password'] ?? ''));
+    // Gunakan mysqli_real_escape_string untuk mengamankan input dari SQL Injection
+    $username = mysqli_real_escape_string($conn, trim($_POST['username'] ?? ''));
+    
+    // PERBAIKAN: Menghapus md5() agar cocok dengan database teks polos kamu saat ini
+    $password = trim($_POST['password'] ?? ''); 
+
     $q = mysqli_query($conn, "SELECT * FROM users WHERE username='$username' AND password='$password' LIMIT 1");
+    
     if ($q && mysqli_num_rows($q) > 0) {
         $user = mysqli_fetch_assoc($q);
         $_SESSION['user_id']   = $user['id'];
-        $_SESSION['user_nama'] = $user['nama'];
+        
+        // Sesuaikan dengan nama kolom di database kamu (nama_lengkap)
+        $_SESSION['user_nama'] = $user['nama_lengkap']; 
         $_SESSION['user_role'] = $user['role'];
-        header('Location: index.php');
+        
+        // Alur tambahan khusus folder 02 (UAS): Walikota langsung diarahkan ke dashboard-nya
+        if ($user['role'] === 'walikota' && file_exists('walikota.php')) {
+            header('Location: walikota.php');
+        } else {
+            header('Location: index.php');
+        }
         exit;
     } else {
         $error = 'Username atau password salah!';
