@@ -1,9 +1,64 @@
-﻿<!DOCTYPE html>
+<?php
+// Silently disable error reporting to prevent display if connection has issues
+mysqli_report(MYSQLI_REPORT_OFF);
+
+$conn = null;
+if (file_exists('01/koneksi.php')) {
+    include '01/koneksi.php';
+}
+
+$count_jalan = '0';
+$count_parsil = '0';
+$count_spbu = '0';
+$count_masjid = '0';
+$count_warga = '0';
+$count_laporan = '0';
+
+if ($conn) {
+    // 1. Ruas Jalan
+    $q = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM jalan");
+    if ($q) {
+        $row = mysqli_fetch_assoc($q);
+        $count_jalan = $row['cnt'] ?? '0';
+    }
+    // 2. Bidang Parsil
+    $q = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM parsil");
+    if ($q) {
+        $row = mysqli_fetch_assoc($q);
+        $count_parsil = $row['cnt'] ?? '0';
+    }
+    // 3. Titik SPBU
+    $q = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM spbu");
+    if ($q) {
+        $row = mysqli_fetch_assoc($q);
+        $count_spbu = $row['cnt'] ?? '0';
+    }
+    // 4. Rumah Ibadah (masjid)
+    $q = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM masjid");
+    if ($q) {
+        $row = mysqli_fetch_assoc($q);
+        $count_masjid = $row['cnt'] ?? '0';
+    }
+    // 5. Data Warga (penduduk_miskin)
+    $q = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM penduduk_miskin");
+    if ($q) {
+        $row = mysqli_fetch_assoc($q);
+        $count_warga = $row['cnt'] ?? '0';
+    }
+    // 6. Pengaduan (laporan_cepat)
+    $q = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM laporan_cepat");
+    if ($q) {
+        $row = mysqli_fetch_assoc($q);
+        $count_laporan = $row['cnt'] ?? '0';
+    }
+}
+?>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WebGIS Pontianak â€” Portal Sistem Informasi Geografis</title>
+<title>WebGIS Pontianak &mdash; Portal Sistem Informasi Geografis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -451,7 +506,7 @@
 
           <!-- Folder label pill -->
           <rect x="350" y="8" width="118" height="22" rx="11" fill="rgba(59,130,246,0.25)" stroke="rgba(99,163,245,0.4)" stroke-width="0.8"/>
-          <text x="409" y="22" font-size="10" fill="#93c5fd" font-family="Inter,sans-serif" font-weight="600" text-anchor="middle">Folder 01 â€” Infrastruktur</text>
+          <text x="409" y="22" font-size="10" fill="#93c5fd" font-family="Inter,sans-serif" font-weight="600" text-anchor="middle">Folder 01 &mdash; Infrastruktur</text>
         </svg>
       </div>
 
@@ -522,7 +577,7 @@
 
           <!-- Folder label pill -->
           <rect x="340" y="8" width="130" height="22" rx="11" fill="rgba(16,185,129,0.2)" stroke="rgba(52,211,153,0.35)" stroke-width="0.8"/>
-          <text x="405" y="22" font-size="10" fill="#6ee7b7" font-family="Inter,sans-serif" font-weight="600" text-anchor="middle">Folder 02 â€” Sosial &amp; Warga</text>
+          <text x="405" y="22" font-size="10" fill="#6ee7b7" font-family="Inter,sans-serif" font-weight="600" text-anchor="middle">Folder 02 &mdash; Sosial &amp; Warga</text>
         </svg>
       </div>
 
@@ -557,7 +612,7 @@
       </div>
       <div>
         <div class="sb-label">Ruas Jalan</div>
-        <div class="sb-val c-blue-text">â€”</div>
+        <div class="sb-val c-blue-text"><?= htmlspecialchars($count_jalan) ?></div>
       </div>
     </div>
     <div class="sb-card">
@@ -566,7 +621,7 @@
       </div>
       <div>
         <div class="sb-label">Bidang Parsil</div>
-        <div class="sb-val" style="color:var(--purple);">â€”</div>
+        <div class="sb-val" style="color:var(--purple);"><?= htmlspecialchars($count_parsil) ?></div>
       </div>
     </div>
     <div class="sb-card">
@@ -575,7 +630,7 @@
       </div>
       <div>
         <div class="sb-label">Titik SPBU</div>
-        <div class="sb-val c-amber-text">â€”</div>
+        <div class="sb-val c-amber-text"><?= htmlspecialchars($count_spbu) ?></div>
       </div>
     </div>
     <div class="sb-card">
@@ -584,7 +639,7 @@
       </div>
       <div>
         <div class="sb-label">Rumah Ibadah</div>
-        <div class="sb-val c-green-text">â€”</div>
+        <div class="sb-val c-green-text"><?= htmlspecialchars($count_masjid) ?></div>
       </div>
     </div>
     <div class="sb-card">
@@ -593,7 +648,7 @@
       </div>
       <div>
         <div class="sb-label">Data Warga</div>
-        <div class="sb-val" style="color:#5B5BD6;">â€”</div>
+        <div class="sb-val" style="color:#5B5BD6;"><?= htmlspecialchars($count_warga) ?></div>
       </div>
     </div>
     <div class="sb-card">
@@ -602,7 +657,7 @@
       </div>
       <div>
         <div class="sb-label">Pengaduan</div>
-        <div class="sb-val c-red-text">â€”</div>
+        <div class="sb-val c-red-text"><?= htmlspecialchars($count_laporan) ?></div>
       </div>
     </div>
   </div>
@@ -665,7 +720,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="#1D7A5F"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           Aktivitas Sistem
         </div>
-        <span class="badge badge-green" id="waktu-update">â€”</span>
+        <span class="badge badge-green" id="waktu-update">&mdash;</span>
       </div>
       <div class="card-body" style="padding:8px 16px">
         <div class="act-list">
