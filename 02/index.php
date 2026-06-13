@@ -878,7 +878,7 @@ function buildDrawerForm(key, cfg, lat, lng) {
     var html = '<form id="drawer-form" onsubmit="submitDrawerForm(event)">';
 
     if (key === 'masjid') {
-        html += field('Nama Rumah Ibadah', 'nama_rumah_ibadah', 'text', true, 'Contoh: Nama Rumah Ibadah');
+        html += field('Nama Rumah Ibadah', 'nama_masjid', 'text', true, 'Contoh: Nama Rumah Ibadah');
         html += field('Nama PIC / Penanggungjawab', 'nama_pic', 'text', true, 'Nama penanggung jawab');
         html += field('Radius Jangkauan (meter)', 'radius_meter', 'number', false, '500');
         html += coordHint();
@@ -1021,7 +1021,7 @@ function renderForm(type, lat, lng) {
     if (type === 'masjid') {
         html +=
             '<form action="simpan_rumah_ibadah.php" method="POST">' +
-            '<label>Nama Rumah Ibadah</label><input name="nama_rumah_ibadah" required placeholder="Nama rumah ibadah">' +
+            '<label>Nama Rumah Ibadah</label><input name="nama_masjid" required placeholder="Nama rumah ibadah">' +
             '<label>Nama PIC / Penanggungjawab</label><input name="nama_pic" required placeholder="Nama penanggungjawab">' +
             '<input type="hidden" name="latitude" value="' + lat + '">' +
             '<input type="hidden" name="longitude" value="' + lng + '">' +
