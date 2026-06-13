@@ -92,30 +92,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; overfl
 [data-theme="light"] .nav-role.admin      { background:rgba(37,99,235,0.08);  color:#2563eb; border-color:rgba(37,99,235,0.2); }
 [data-theme="light"] .nav-role.masyarakat { background:rgba(22,163,74,0.08);  color:#16a34a; border-color:rgba(22,163,74,0.2); }
 
-.nav-btn {
-    display: flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 8px;
-    font-size: 12px; font-weight: 600; color: var(--nav-text); background: transparent;
-    border: none; cursor: pointer; text-decoration: none;
-    transition: background 0.15s, color 0.15s; white-space: nowrap;
-}
-.nav-btn i { font-size: 13px; }
-.nav-btn:hover { background: var(--nav-surface-hover); color: var(--nav-text-hover); }
-.nav-btn.laporan { color: #f59e0b; }
-.nav-btn.laporan:hover { background: rgba(251,191,36,0.12); color: #fbbf24; }
-.nav-btn.bantuan { color: #4ade80; }
-.nav-btn.bantuan:hover { background: rgba(34,197,94,0.12); }
-[data-theme="light"] .nav-btn.laporan { color: #d97706; }
-[data-theme="light"] .nav-btn.bantuan { color: #16a34a; }
-
-.notif-wrap { position: relative; display: inline-flex; }
-.notif-dot {
-    position: absolute; top: 1px; right: 1px; width: 7px; height: 7px;
-    border-radius: 50%; background: #f59e0b;
-    box-shadow: 0 0 0 2px var(--nav-bg); animation: ping-dot 2s infinite;
-    pointer-events: none;
-}
-@keyframes ping-dot { 0%,100%{opacity:1} 50%{opacity:0.35} }
-
 .user-chip {
     display: flex; align-items: center; gap: 7px;
     padding: 4px 10px 4px 4px;
@@ -518,19 +494,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; overfl
         <span class="nav-role <?= $role ?>"><?= strtoupper($role) ?></span>
     </div>
     <div class="nav-right">
-        <?php if (in_array($role, ['admin','walikota'])): ?>
-        <div class="notif-wrap">
-            <a href="kelola_laporan.php" class="nav-btn laporan">
-                <i class="fa-solid fa-bell"></i> Kelola Laporan
-            </a>
-            <span class="notif-dot"></span>
-        </div>
-        <a href="histori_bantuan.php" class="nav-btn bantuan">
-            <i class="fa-solid fa-hand-holding-heart"></i> Histori Bantuan
-        </a>
-        <div class="nav-divider"></div>
-        <?php endif; ?>
-
         <div class="user-chip">
             <div class="user-avatar"><?= htmlspecialchars($initials) ?></div>
             <span class="user-name"><?= htmlspecialchars($user_nama) ?></span>
