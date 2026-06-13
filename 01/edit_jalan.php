@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'koneksi.php';
 $id = $_GET['id'];
 $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM jalan WHERE id='$id'"));
@@ -7,7 +8,9 @@ if (isset($_POST['update'])) {
     $nama = $_POST['nama_jalan'];
     $status = $_POST['status_jalan'];
     mysqli_query($conn, "UPDATE jalan SET nama_jalan='$nama', status_jalan='$status' WHERE id='$id'");
-    echo "<script>alert('Data Jalan Diperbarui!'); window.location='index.php';</script>";
+    $_SESSION['alert'] = 'Data Jalan Diperbarui!';
+    header('Location: index.php');
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -26,7 +29,7 @@ if (isset($_POST['update'])) {
         <h3>Edit Data Jalan</h3>
         <form method="POST">
             <label>Nama Jalan</label>
-            <input type="text" name="nama_jalan" value="<?= $data['nama_jalan'] ?>" required>
+            <input type="text" name="nama_jalan" value="<?= htmlspecialchars($data['nama_jalan']) ?>" required>
             <label>Status Jalan</label>
             <select name="status_jalan">
                 <option value="Jalan Nasional" <?= ($data['status_jalan'] == 'Jalan Nasional') ? 'selected' : '' ?>>Jalan Nasional</option>

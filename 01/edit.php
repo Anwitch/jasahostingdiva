@@ -1,36 +1,35 @@
 <?php
+session_start();
 include 'koneksi.php';
 
-// 1. Ambil ID dari URL
 $id = isset($_GET['id']) ? $_GET['id'] : '';
-
-// 2. Ambil data lama dari database berdasarkan ID
 $query = mysqli_query($conn, "SELECT * FROM spbu WHERE id='$id'");
 $data  = mysqli_fetch_array($query);
 
-// Jika data tidak ditemukan, balikkan ke index
 if (!$data) {
-    echo "<script>alert('Data tidak ditemukan!'); window.location='index.php';</script>";
+    $_SESSION['alert'] = 'Data tidak ditemukan!';
+    header('Location: index.php');
     exit;
 }
 
-// 3. Proses Update saat tombol Simpan ditekan
 if (isset($_POST['update'])) {
     $nama = mysqli_real_escape_string($conn, $_POST['nama']);
     $wa   = mysqli_real_escape_string($conn, $_POST['wa']);
     $jam  = $_POST['jam'];
     
-    // Update ke tabel spbu
     $sql = "UPDATE spbu SET nama_spbu='$nama', no_whatsapp='$wa', status_24jam='$jam' WHERE id='$id'";
     
     if (mysqli_query($conn, $sql)) {
-        echo "<script>alert('Data SPBU Berhasil Diperbarui!'); window.location='index.php';</script>";
+        $_SESSION['alert'] = 'Data SPBU Berhasil Diperbarui!';
+        header('Location: index.php');
+        exit;
     } else {
-        echo "Gagal Update: " . mysqli_error($conn);
+        $_SESSION['alert'] = 'Gagal Update: ' . mysqli_error($conn);
+        header('Location: index.php');
+        exit;
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -43,96 +42,85 @@ if (isset($_POST['update'])) {
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            background: #f0f2f5; 
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f3f4f6;
         }
-        .card { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-            width: 100%; 
-            max-width: 400px; 
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            max-width: 400px;
         }
-        h3 { 
-            margin-top: 0; 
-            color: #1a73e8; 
-            text-align: center; 
-            border-bottom: 2px solid #f0f2f5; 
-            padding-bottom: 15px; 
-            margin-bottom: 20px;
+        h2 {
+            margin-top: 0;
+            color: #1f2937;
+            text-align: center;
+            font-weight: 600;
         }
-        label { 
-            font-size: 13px; 
-            font-weight: 600; 
-            color: #555; 
-            display: block; 
-            margin-bottom: 5px; 
-        }
-        input, select { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 20px; 
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
-            box-sizing: border-box; 
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4b5563;
             font-size: 14px;
-            outline: none;
-            transition: 0.3s;
+            font-weight: 500;
         }
-        input:focus, select:focus {
-            border-color: #1a73e8;
-            box-shadow: 0 0 0 2px rgba(26,115,232,0.2);
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-sizing: border-box;
         }
-        button { 
-            width: 100%; 
-            background: #1a73e8; 
-            color: white; 
-            border: none; 
-            padding: 12px; 
-            cursor: pointer; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            font-size: 15px;
-            transition: 0.3s;
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
-        button:hover { 
-            background: #1557b0; 
-            box-shadow: 0 4px 12px rgba(26,115,232,0.3);
+        button:hover {
+            background-color: #2563eb;
         }
-        .btn-back { 
-            display: block; 
-            text-align: center; 
-            margin-top: 15px; 
-            font-size: 13px; 
-            text-decoration: none; 
-            color: #666; 
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
         }
-        .btn-back:hover { 
-            color: #333; 
-            text-decoration: underline; 
+        a:hover {
+            color: #6b7280;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h3>Edit Data SPBU</h3>
+    <div class="container">
+        <h2>Edit SPBU</h2>
         <form method="POST">
-            <label>NAMA SPBU</label>
-            <input type="text" name="nama" value="<?= htmlspecialchars($data['nama_spbu']) ?>" placeholder="Masukkan nama SPBU" required>
-            
-            <label>NOMOR WHATSAPP</label>
-            <input type="text" name="wa" value="<?= htmlspecialchars($data['no_whatsapp']) ?>" placeholder="Contoh: 08123456789" required>
-            
-            <label>STATUS OPERASIONAL</label>
-            <select name="jam">
-                <option value="Ya" <?= ($data['status_24jam'] == 'Ya') ? 'selected' : '' ?>>Buka 24 Jam (Ikon Hijau)</option>
-                <option value="Tidak" <?= ($data['status_24jam'] == 'Tidak') ? 'selected' : '' ?>>Tutup Malam (Ikon Merah)</option>
+            <label for="nama">Nama SPBU</label>
+            <input type="text" id="nama" name="nama" value="<?php echo htmlspecialchars($data['nama_spbu']); ?>" required>
+
+            <label for="wa">No. WhatsApp</label>
+            <input type="text" id="wa" name="wa" value="<?php echo htmlspecialchars($data['no_whatsapp']); ?>" required>
+
+            <label for="jam">Status 24 Jam</label>
+            <select id="jam" name="jam">
+                <option value="Aktif" <?php echo ($data['status_24jam'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
+                <option value="Tidak Aktif" <?php echo ($data['status_24jam'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
             </select>
-            
-            <button type="submit" name="update">SIMPAN PERUBAHAN</button>
-            <a href="index.php" class="btn-back">← Batal dan Kembali</a>
+
+            <button type="submit" name="update">Update</button>
+            <a href="index.php">Kembali</a>
         </form>
     </div>
 </body>

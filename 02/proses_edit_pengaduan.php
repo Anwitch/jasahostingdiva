@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,12 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               WHERE id = '$id'";
 
     if (mysqli_query($conn, $query)) {
-        echo "<script>
-                alert('Laporan pengaduan berhasil diperbarui!');
-                window.location.href='index.php';
-              </script>";
+        $_SESSION['alert'] = 'Laporan pengaduan berhasil diperbarui!';
     } else {
-        echo "Gagal memperbarui data: " . mysqli_error($conn);
+        $_SESSION['alert'] = 'Gagal memperbarui data: ' . mysqli_error($conn);
     }
 }
+header('Location: index.php');
+exit;
 ?>

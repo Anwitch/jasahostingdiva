@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -7,14 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $luas_tanah    = (float)$_POST['luas_tanah'];
     $geojson       = mysqli_real_escape_string($conn, $_POST['geojson_coords']);
 
-    // Coba insert dengan nama kolom nama_pemilik dan status_kepemilikan
     $query = "INSERT INTO parsil (nama_pemilik, status_kepemilikan, luas_tanah, geojson)
               VALUES ('$pemilik_tanah', '$status_shm', '$luas_tanah', '$geojson')";
 
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Data Parsil berhasil disimpan!'); window.location='index.php';</script>";
+        $_SESSION['alert'] = 'Data Parsil berhasil disimpan!';
     } else {
-        echo "Gagal menyimpan: " . mysqli_error($conn);
+        $_SESSION['alert'] = 'Gagal menyimpan: ' . mysqli_error($conn);
     }
 }
+header('Location: index.php');
+exit;
 ?>

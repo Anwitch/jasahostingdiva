@@ -1172,5 +1172,8 @@ if ($q && mysqli_num_rows($q) > 0) {
     }
 }
 ?>
+<?php if (isset($_SESSION['alert'])): ?>
+<script>alert(<?= json_encode($_SESSION['alert']) ?>);</script>
+<?php unset($_SESSION['alert']); endif; ?>
 </body>
 </html>

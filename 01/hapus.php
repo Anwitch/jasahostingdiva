@@ -1,33 +1,16 @@
 <?php
+session_start();
 include 'koneksi.php';
 
-// 1. Cek apakah ada ID yang dikirim melalui URL
 if (isset($_GET['id']) && $_GET['id'] != "") {
-    
-    $id = $_GET['id'];
-
-    // 2. Gunakan mysqli_real_escape_string untuk keamanan tambahan
-    $id = mysqli_real_escape_string($conn, $id);
-
-    // 3. Jalankan query hapus
+    $id = mysqli_real_escape_string($conn, $_GET['id']);
     $query = "DELETE FROM spbu WHERE id='$id'";
-    
     if (mysqli_query($conn, $query)) {
-        // Jika berhasil, munculkan pesan dan kembali ke index
-        echo "<script>
-                alert('Data SPBU Berhasil Dihapus!');
-                window.location='index.php';
-              </script>";
+        $_SESSION['alert'] = 'Data SPBU Berhasil Dihapus!';
     } else {
-        // Jika gagal, tampilkan pesan error
-        echo "<script>
-                alert('Gagal menghapus data: " . mysqli_error($conn) . "');
-                window.location='index.php';
-              </script>";
+        $_SESSION['alert'] = 'Gagal menghapus data: ' . mysqli_error($conn);
     }
-
-} else {
-    // Jika tidak ada ID di URL, langsung lempar balik ke index
-    header("location:index.php");
 }
+header("Location: index.php");
+exit;
 ?>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,9 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               VALUES ('$nama_pelapor', '$kontak_pelapor', '$deskripsi_laporan', '$latitude', '$longitude')";
 
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Laporan Pengaduan berhasil dikirim!'); window.location.href='index.php';</script>";
+        $_SESSION['alert'] = 'Laporan Pengaduan berhasil dikirim!';
     } else {
-        echo "Error: " . mysqli_error($conn);
+        $_SESSION['alert'] = 'Error: ' . mysqli_error($conn);
     }
 }
+header('Location: index.php');
+exit;
 ?>

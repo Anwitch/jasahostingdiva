@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'koneksi.php';
 $id = $_GET['id'];
 $data = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM parsil WHERE id='$id'"));
@@ -7,7 +8,9 @@ if (isset($_POST['update'])) {
     $pemilik = $_POST['nama_pemilik'];
     $status = $_POST['status_kepemilikan'];
     mysqli_query($conn, "UPDATE parsil SET nama_pemilik='$pemilik', status_kepemilikan='$status' WHERE id='$id'");
-    echo "<script>alert('Data Parsil Diperbarui!'); window.location='index.php';</script>";
+    $_SESSION['alert'] = 'Data Parsil Diperbarui!';
+    header('Location: index.php');
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -26,7 +29,7 @@ if (isset($_POST['update'])) {
         <h3>Edit Data Parsil</h3>
         <form method="POST">
             <label>Nama Pemilik</label>
-            <input type="text" name="nama_pemilik" value="<?= $data['nama_pemilik'] ?>" required>
+            <input type="text" name="nama_pemilik" value="<?= htmlspecialchars($data['nama_pemilik']) ?>" required>
             <label>Status Kepemilikan</label>
             <select name="status_kepemilikan">
                 <option value="SHM" <?= ($data['status_kepemilikan'] == 'SHM') ? 'selected' : '' ?>>SHM</option>

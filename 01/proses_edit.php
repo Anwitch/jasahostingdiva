@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'koneksi.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,9 +11,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "UPDATE spbu SET nama_spbu='$nama', no_whatsapp='$wa', status_24jam='$jam' WHERE id='$id'";
 
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Data berhasil diperbarui!'); window.location='index.php';</script>";
+        $_SESSION['alert'] = 'Data berhasil diperbarui!';
     } else {
-        echo "Gagal mengupdate data: " . mysqli_error($conn);
+        $_SESSION['alert'] = 'Gagal mengupdate data: ' . mysqli_error($conn);
     }
 }
+header('Location: index.php');
+exit;
 ?>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -11,9 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               VALUES ('$nama_jalan', '$status_jalan', '$panjang', '$geojson')";
 
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Data Jalan berhasil disimpan!'); window.location='index.php';</script>";
+        $_SESSION['alert'] = 'Data Jalan berhasil disimpan!';
     } else {
-        echo "Gagal menyimpan: " . mysqli_error($conn);
+        $_SESSION['alert'] = 'Gagal menyimpan: ' . mysqli_error($conn);
     }
 }
+header('Location: index.php');
+exit;
 ?>
