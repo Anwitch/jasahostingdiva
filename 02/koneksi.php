@@ -1,4 +1,8 @@
 <?php
+// PHP 8.1+ membuat mysqli melempar exception saat gagal koneksi (bukan return false).
+// Kembalikan ke mode lama agar @mysqli_connect() & pengecekan if(!$conn) di bawah berfungsi.
+mysqli_report(MYSQLI_REPORT_OFF);
+
 // Cek apakah web sedang berjalan di dalam container Docker
 $is_docker = file_exists('/.dockerenv');
 
@@ -40,7 +44,11 @@ parse_db_uri($host, $host, $user, $pass, $db);
 
 // Jika environment variables tidak terdefinisi (seperti di lokal/development), gunakan auto-detection fallback
 if (!$host) {
-    if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1') {
+    // Ambil host dari request, buang port jika ada (mis. "localhost:8000" -> "localhost")
+    $hostHeader = $_SERVER['HTTP_HOST'] ?? ($_SERVER['SERVER_NAME'] ?? '');
+    $hostHeader = preg_replace('/:\d+$/', '', $hostHeader);
+
+    if (in_array($hostHeader, ['localhost', '127.0.0.1', '::1', ''], true)) {
         // KONEKSI UNTUK LOKAL (Laragon / Docker Lokal)
         // Jika di dalam Docker, gunakan host.docker.internal untuk mengakses MySQL di host Windows
         $host = $is_docker ? "host.docker.internal" : "localhost";

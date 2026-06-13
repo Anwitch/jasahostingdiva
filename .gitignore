@@ -3,3 +3,6 @@
 .env
 .coolify-local.json
 Dockerfile.coolify
+
+# Local-only docker compose overrides (e.g. port mappings for browser access)
+docker-compose.override.yml
